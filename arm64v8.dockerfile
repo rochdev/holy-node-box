@@ -17,7 +17,7 @@ ENV PATH /root/.nvm/versions/node/v$NODE_VERSION/bin:$PATH
 ENV PATH /root/.yarn/bin:/root/.config/yarn/global/node_modules/.bin:$PATH
 
 RUN apt-get update
-RUN apt-get -y install curl gcc-4.7-arm-linux-gnueabihf gcc-4.7-multilib-arm-linux-gnueabihf git g++-4.7-arm-linux-gnueabihf g++-4.7-multilib-arm-linux-gnueabihf make python-dev
+# TODO: add gcc-4.7-arm-linux-gnueabi and g++-4.7-arm-linux-gnueabi to support older 14.04
+RUN apt-get -y install curl git make python-dev
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
 RUN curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
-RUN ln -s /usr/bin/g++-4.7 /usr/bin/g++
