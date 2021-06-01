@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM amd64/ubuntu:14.04
 
 SHELL ["/bin/bash", "--login", "-c"]
 
