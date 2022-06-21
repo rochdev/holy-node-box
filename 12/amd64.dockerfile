@@ -9,7 +9,7 @@ ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH /root/.nvm/versions/node/v$NODE_VERSION/bin:$PATH
 
 RUN yum -y install centos-release-scl \
-  && yum -y install devtoolset-8-* \
+  && yum -y install devtoolset-8-* glibc-devel.i686 libgcc.i686 libstdc++-*.i686 \
   && yum clean all
 RUN scl enable devtoolset-8 bash
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
