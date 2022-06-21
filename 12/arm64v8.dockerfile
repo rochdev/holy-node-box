@@ -19,9 +19,9 @@ RUN apt-get update
 # TODO: add gcc-4.7-arm-linux-gnueabi and g++-4.7-arm-linux-gnueabi to support older 14.04
 RUN apt-get -y install curl git make python-dev
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
-RUN curl -fsSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz" \
+RUN curl -fksSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz" \
   && mkdir -p /opt \
   && tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/ \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
-  && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
+  && rm yarn-v$YARN_VERSION.tar.gz
