@@ -10,7 +10,6 @@ ENV PATH /root/.nvm/versions/node/v$NODE_VERSION/bin:$PATH
 
 RUN yum group install "Development Tools"
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
-RUN curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
 RUN curl -fksSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz" \
   && mkdir -p /opt \
   && tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/ \
