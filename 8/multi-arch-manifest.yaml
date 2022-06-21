@@ -1,10 +1,10 @@
-image: rochdev/holy-node-box:latest
+image: rochdev/holy-node-box:8
 manifests:
-  - image: rochdev/holy-node-box:amd64
+  - image: rochdev/holy-node-box:8-amd64
     platform:
       architecture: amd64
       os: linux
-  - image: rochdev/holy-node-box:arm64v8
+  - image: rochdev/holy-node-box:8-arm64v8
     platform:
       architecture: arm64
       os: linux
