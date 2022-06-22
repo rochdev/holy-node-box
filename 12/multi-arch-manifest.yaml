@@ -8,7 +8,3 @@ manifests:
     platform:
       architecture: arm64
       os: linux
-  - image: rochdev/holy-node-box:12-i386
-    platform:
-      architecture: i386
-      os: linux
