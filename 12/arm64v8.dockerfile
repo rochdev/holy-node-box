@@ -12,8 +12,7 @@ SHELL ["/bin/bash", "--login", "-c"]
 ENV NODE_VERSION 12.0.0
 ENV YARN_VERSION 1.19.1
 
-ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
-ENV PATH /root/.nvm/versions/node/v$NODE_VERSION/bin:$PATH
+ENV NODE_PATH /opt/node-v$NODE_VERSION-linux-arm64/lib/node_modules
 
 RUN yum -y install centos-release-scl \
   && yum -y install devtoolset-8-* \
