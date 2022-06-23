@@ -4,7 +4,7 @@ ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/
 RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
 
 # TODO: make this work with centos7 instead
-FROM arm32v7/ubuntu:14.04
+FROM arm32v7/ubuntu:16.04
 
 COPY --from=builder qemu-arm-static /usr/bin
 
