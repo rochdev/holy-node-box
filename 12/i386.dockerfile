@@ -1,4 +1,4 @@
-FROM i386/centos:centos7
+FROM i386/ubuntu:14.04
 
 SHELL ["/bin/bash", "--login", "-c"]
 
@@ -7,8 +7,12 @@ ENV YARN_VERSION 1.19.1
 
 ENV NODE_PATH /opt/node-v$NODE_VERSION-linux-x86/lib/node_modules
 
-RUN yum -y group install 'Development Tools' \
-  && yum clean all
+RUN apt-get update \
+  && apt-get -y install build-essential software-properties-common \
+  && add-apt-repository -y ppa:ubuntu-toolchain-r/test \
+  && apt-get update \
+  && apt-get -y install curl gcc-8 git g++-8 make python-dev \
+  && apt-get clean
 RUN mkdir -p /opt
 RUN curl -fksSLO --compressed "https://unofficial-builds.nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION-linux-x86.tar.gz" \
   && tar -xzf node-v$NODE_VERSION-linux-x86.tar.gz -C /opt/ \
@@ -21,3 +25,5 @@ RUN curl -fksSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
   && rm yarn-v$YARN_VERSION.tar.gz
+RUN ln -s --force /usr/bin/gcc-8 /usr/bin/gcc
+RUN ln -s --force /usr/bin/g++-8 /usr/bin/g++
