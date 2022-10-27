@@ -17,6 +17,7 @@ ENV NODE_PATH /opt/node-v$NODE_VERSION-linux-armv7l/lib/node_modules
 
 RUN apt-get update \
   && apt-get -y install build-essential software-properties-common \
+  && add-apt-repository -y ppa:git-core/ppa \
   && add-apt-repository -y ppa:ubuntu-toolchain-r/test \
   && apt-get update \
   && apt-get -y install curl gcc-8 git g++-8 make python-dev \

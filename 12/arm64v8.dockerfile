@@ -15,7 +15,7 @@ ENV YARN_VERSION 1.19.1
 ENV NODE_PATH /opt/node-v$NODE_VERSION-linux-arm64/lib/node_modules
 
 RUN yum -y install centos-release-scl \
-  && yum -y install devtoolset-8-* \
+  && yum -y install devtoolset-8-* rh-git227-git \
   && yum clean all
 RUN scl enable devtoolset-8 bash
 RUN mkdir -p /opt
@@ -32,3 +32,4 @@ RUN curl -fksSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-
   && rm yarn-v$YARN_VERSION.tar.gz
 RUN ln -s --force /opt/rh/devtoolset-8/root/bin/gcc /usr/bin/gcc
 RUN ln -s --force /opt/rh/devtoolset-8/root/bin/g++ /usr/bin/g++
+RUN ln -s --force /opt/rh/rh-git227/root/usr/bin/git /usr/bin/git
