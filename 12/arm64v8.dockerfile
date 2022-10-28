@@ -15,9 +15,10 @@ ENV YARN_VERSION 1.19.1
 ENV NODE_PATH /opt/node-v$NODE_VERSION-linux-arm64/lib/node_modules
 
 RUN yum -y install centos-release-scl \
-  && yum -y install devtoolset-8-* rh-git227-git \
+  && yum -y install devtoolset-8-* rh-git227-* \
   && yum clean all
 RUN scl enable devtoolset-8 bash
+RUN scl enable rh-git227 bash
 RUN mkdir -p /opt
 RUN curl -fksSLO --compressed "https://nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION-linux-arm64.tar.gz" \
   && tar -xzf node-v$NODE_VERSION-linux-arm64.tar.gz -C /opt/ \
