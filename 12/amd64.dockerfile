@@ -1,14 +1,15 @@
 FROM centos:centos7
 
-COPY entrypoint.sh /usr/bin/entrypoint.sh
-
 ENV NODE_VERSION 12.0.0
 ENV YARN_VERSION 1.19.1
+ENV GIT_VERSION 2.18.0
 
 ENV NODE_PATH /opt/node-v$NODE_VERSION-linux-x64/lib/node_modules
 
 RUN yum -y install centos-release-scl \
-  && yum -y install devtoolset-8-* rh-git227-* \
+  && yum -y install devtoolset-8-* \
+  && yum groupinstall -y 'Development Tools' \
+  && yum install -y curl-devel expat-devel gettext-devel openssl-devel perl-CPAN perl-devel wget zlib-devel \
   && yum clean all
 RUN mkdir -p /opt
 RUN curl -fksSLO --compressed "https://nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
@@ -24,7 +25,11 @@ RUN curl -fksSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-
   && rm yarn-v$YARN_VERSION.tar.gz
 RUN ln -s --force /opt/rh/devtoolset-8/root/bin/gcc /usr/bin/gcc
 RUN ln -s --force /opt/rh/devtoolset-8/root/bin/g++ /usr/bin/g++
-RUN ln -s --force /opt/rh/rh-git227/root/usr/bin/git /usr/bin/git
-RUN chmod +x /usr/bin/entrypoint.sh
+RUN wget https://github.com/git/git/archive/v$GIT_VERSION.tar.gz
+RUN tar xvf v$GIT_VERSION.tar.gz
 
-ENTRYPOINT ["/usr/bin/entrypoint.sh"]
+WORKDIR /git-$GIT_VERSION
+
+RUN make configure
+RUN ./configure --prefix=/usr/local
+RUN make install
