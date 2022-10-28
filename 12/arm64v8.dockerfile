@@ -7,7 +7,7 @@ FROM arm64v8/centos:centos7
 
 COPY --from=builder qemu-aarch64-static /usr/bin
 
-# SHELL ["/bin/bash", "--login", "-c"]
+SHELL ["/bin/bash", "--login", "-c"]
 
 ENV NODE_VERSION 12.0.0
 ENV YARN_VERSION 1.19.1
