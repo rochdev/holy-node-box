@@ -6,8 +6,7 @@ RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
 FROM arm64v8/centos:centos7
 
 COPY --from=builder qemu-aarch64-static /usr/bin
-
-SHELL ["/bin/bash", "--login", "-c"]
+COPY entrypoint.sh /usr/bin/entrypoint.sh
 
 ENV NODE_VERSION 12.0.0
 ENV YARN_VERSION 1.19.1
@@ -17,8 +16,6 @@ ENV NODE_PATH /opt/node-v$NODE_VERSION-linux-arm64/lib/node_modules
 RUN yum -y install centos-release-scl \
   && yum -y install devtoolset-8-* rh-git227-* \
   && yum clean all
-RUN echo 'source scl_source enable devtoolset-8' >> /etc/profile.d/custom.sh
-RUN echo 'source scl_source enable rh-git227' >> /etc/profile.d/custom.sh
 RUN mkdir -p /opt
 RUN curl -fksSLO --compressed "https://nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION-linux-arm64.tar.gz" \
   && tar -xzf node-v$NODE_VERSION-linux-arm64.tar.gz -C /opt/ \
@@ -34,3 +31,6 @@ RUN curl -fksSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-
 RUN ln -s --force /opt/rh/devtoolset-8/root/bin/gcc /usr/bin/gcc
 RUN ln -s --force /opt/rh/devtoolset-8/root/bin/g++ /usr/bin/g++
 RUN ln -s --force /opt/rh/rh-git227/root/usr/bin/git /usr/bin/git
+RUN chmod +x /usr/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
