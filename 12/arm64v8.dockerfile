@@ -7,7 +7,7 @@ FROM arm64v8/centos:centos7
 
 COPY --from=builder qemu-aarch64-static /usr/bin
 
-SHELL ["/bin/bash", "--login", "-c"]
+# SHELL ["/bin/bash", "--login", "-c"]
 
 ENV NODE_VERSION 12.0.0
 ENV YARN_VERSION 1.19.1
@@ -17,8 +17,8 @@ ENV NODE_PATH /opt/node-v$NODE_VERSION-linux-arm64/lib/node_modules
 RUN yum -y install centos-release-scl \
   && yum -y install devtoolset-8-* rh-git227-* \
   && yum clean all
-RUN scl enable devtoolset-8 bash
-RUN scl enable rh-git227 bash
+RUN echo 'source scl_source enable devtoolset-8' >> /etc/profile.d/custom.sh
+RUN echo 'source scl_source enable rh-git227' >> /etc/profile.d/custom.sh
 RUN mkdir -p /opt
 RUN curl -fksSLO --compressed "https://nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION-linux-arm64.tar.gz" \
   && tar -xzf node-v$NODE_VERSION-linux-arm64.tar.gz -C /opt/ \
