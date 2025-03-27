@@ -1,13 +1,16 @@
 FROM centos:centos7
 
-ENV NODE_VERSION 12.0.0
-ENV YARN_VERSION 1.19.1
-ENV GIT_VERSION 2.18.0
+ENV NODE_VERSION=12.0.0
+ENV YARN_VERSION=1.19.1
+ENV GIT_VERSION=2.18.0
 
-ENV NODE_PATH /opt/node-v$NODE_VERSION-linux-x64/lib/node_modules
+ENV NODE_PATH=/opt/node-v$NODE_VERSION-linux-x64/lib/node_modules
 
+RUN sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/*.repo \
+  && sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/*.repo \
+  && sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/*.repo
 RUN yum -y install centos-release-scl \
-  && yum -y install devtoolset-8-* \
+  && yum -y install devtoolset-9 \
   && yum groupinstall -y 'Development Tools' \
   && yum install -y curl-devel expat-devel gettext-devel openssl-devel perl-CPAN perl-devel wget zlib-devel \
   && yum clean all

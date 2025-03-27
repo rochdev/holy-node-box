@@ -12,7 +12,7 @@ RUN apt-get update \
   && add-apt-repository -y ppa:git-core/ppa \
   && add-apt-repository -y ppa:ubuntu-toolchain-r/test \
   && apt-get update \
-  && apt-get -y install curl gcc-8 git g++-8 make python-dev \
+  && apt-get -y install curl gcc-9 git g++-9 make python-dev \
   && apt-get clean
 RUN mkdir -p /opt
 RUN curl -fksSLO --compressed "https://unofficial-builds.nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION-linux-x86.tar.gz" \
