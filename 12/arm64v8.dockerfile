@@ -13,11 +13,14 @@ ENV GIT_VERSION=2.18.0
 
 ENV NODE_PATH=/opt/node-v$NODE_VERSION-linux-arm64/lib/node_modules
 
-RUN sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/*.repo \
+RUN sed -i 's/mirror.centos.org\/altarch/mirror.chpc.utah.edu\/pub\/centos\-altarch/g' /etc/yum.repos.d/*.repo \
+  && sed -i 's/mirror.centos.org\/centos/mirror.chpc.utah.edu\/pub\/centos\-altarch/g' /etc/yum.repos.d/*.repo \
   && sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/*.repo \
   && sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/*.repo
+RUN cat /etc/yum.repos.d/CentOS-Base.repo
 RUN yum -y install centos-release-scl
-RUN sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/*.repo \
+RUN sed -i 's/mirror.centos.org\/altarch/mirror.chpc.utah.edu\/pub\/centos\-altarch/g' /etc/yum.repos.d/*.repo \
+  && sed -i 's/mirror.centos.org\/centos/mirror.chpc.utah.edu\/pub\/centos\-altarch/g' /etc/yum.repos.d/*.repo \
   && sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/*.repo \
   && sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/*.repo
 RUN yum -y install devtoolset-9 \
