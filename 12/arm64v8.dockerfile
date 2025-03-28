@@ -17,7 +17,6 @@ RUN sed -i 's/mirror.centos.org\/altarch/mirror.chpc.utah.edu\/pub\/centos\-alta
   && sed -i 's/mirror.centos.org\/centos/mirror.chpc.utah.edu\/pub\/centos\-altarch/g' /etc/yum.repos.d/*.repo \
   && sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/*.repo \
   && sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/*.repo
-RUN cat /etc/yum.repos.d/CentOS-Base.repo
 RUN yum -y install centos-release-scl
 RUN sed -i 's/mirror.centos.org\/altarch/mirror.chpc.utah.edu\/pub\/centos\-altarch/g' /etc/yum.repos.d/*.repo \
   && sed -i 's/mirror.centos.org\/centos/mirror.chpc.utah.edu\/pub\/centos\-altarch/g' /etc/yum.repos.d/*.repo \
