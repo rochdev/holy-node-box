@@ -2,10 +2,10 @@ FROM i386/ubuntu:14.04
 
 SHELL ["/bin/bash", "--login", "-c"]
 
-ENV NODE_VERSION 12.0.0
-ENV YARN_VERSION 1.19.1
+ENV NODE_VERSION=12.0.0
+ENV YARN_VERSION=1.19.1
 
-ENV NODE_PATH /opt/node-v$NODE_VERSION-linux-x86/lib/node_modules
+ENV NODE_PATH=/opt/node-v$NODE_VERSION-linux-x86/lib/node_modules
 
 RUN apt-get update \
   && apt-get -y install build-essential software-properties-common \

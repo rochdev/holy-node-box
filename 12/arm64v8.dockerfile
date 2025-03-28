@@ -7,11 +7,11 @@ FROM arm64v8/centos:centos7
 
 COPY --from=builder qemu-aarch64-static /usr/bin
 
-ENV NODE_VERSION 12.0.0
-ENV YARN_VERSION 1.19.1
-ENV GIT_VERSION 2.18.0
+ENV NODE_VERSION=12.0.0
+ENV YARN_VERSION=1.19.1
+ENV GIT_VERSION=2.18.0
 
-ENV NODE_PATH /opt/node-v$NODE_VERSION-linux-arm64/lib/node_modules
+ENV NODE_PATH=/opt/node-v$NODE_VERSION-linux-arm64/lib/node_modules
 
 RUN sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/*.repo \
   && sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/*.repo \

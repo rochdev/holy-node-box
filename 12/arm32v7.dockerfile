@@ -1,6 +1,6 @@
 FROM alpine AS builder
 
-ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/qemu-3.0.0+resin-arm.tar.gz
+ENV QEMU_URL=https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/qemu-3.0.0+resin-arm.tar.gz
 RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
 
 # TODO: make this work with centos7 instead
@@ -10,10 +10,10 @@ COPY --from=builder qemu-arm-static /usr/bin
 
 SHELL ["/bin/bash", "--login", "-c"]
 
-ENV NODE_VERSION 12.0.0
-ENV YARN_VERSION 1.19.1
+ENV NODE_VERSION=12.0.0
+ENV YARN_VERSION=1.19.1
 
-ENV NODE_PATH /opt/node-v$NODE_VERSION-linux-armv7l/lib/node_modules
+ENV NODE_PATH=/opt/node-v$NODE_VERSION-linux-armv7l/lib/node_modules
 
 RUN apt-get update \
   && apt-get -y install build-essential software-properties-common \
