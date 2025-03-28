@@ -13,19 +13,15 @@ ENV GIT_VERSION=2.18.0
 
 ENV NODE_PATH=/opt/node-v$NODE_VERSION-linux-arm64/lib/node_modules
 
+RUN yum-config-manager --add-repo https://buildlogs.centos.org/c7-devtoolset-12.aarch64
 RUN sed -i 's/mirror.centos.org\/altarch/mirror.chpc.utah.edu\/pub\/centos\-altarch/g' /etc/yum.repos.d/*.repo \
   && sed -i 's/mirror.centos.org\/centos/mirror.chpc.utah.edu\/pub\/centos\-altarch/g' /etc/yum.repos.d/*.repo \
+  && sed -i 's/\$basearch/aarch64/g' /etc/yum.repos.d/*.repo \
   && sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/*.repo \
   && sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/*.repo
-RUN cat /etc/yum.repos.d/CentOS-Base.repo
-RUN yum -y install centos-release-scl
-RUN sed -i 's/mirror.centos.org\/altarch/mirror.chpc.utah.edu\/pub\/centos\-altarch/g' /etc/yum.repos.d/*.repo \
-  && sed -i 's/mirror.centos.org\/centos/mirror.chpc.utah.edu\/pub\/centos\-altarch/g' /etc/yum.repos.d/*.repo \
-  && sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/*.repo \
-  && sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/*.repo
-RUN yum -y install devtoolset-9 \
-  && yum groupinstall -y 'Development Tools' \
-  && yum install -y curl-devel expat-devel gettext-devel openssl-devel perl-CPAN perl-devel wget zlib-devel \
+RUN yum -y install --nogpgcheck devtoolset-12 \
+  && yum groupinstall -y --nogpgcheck 'Development Tools' \
+  && yum install -y --nogpgcheck curl-devel expat-devel gettext-devel openssl-devel perl-CPAN perl-devel wget zlib-devel \
   && yum clean all
 RUN mkdir -p /opt
 RUN curl -fksSLO --compressed "https://nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION-linux-arm64.tar.gz" \
@@ -39,8 +35,8 @@ RUN curl -fksSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
   && rm yarn-v$YARN_VERSION.tar.gz
-RUN ln -s --force /opt/rh/devtoolset-9/root/bin/gcc /usr/bin/gcc
-RUN ln -s --force /opt/rh/devtoolset-9/root/bin/g++ /usr/bin/g++
+RUN ln -s --force /opt/rh/devtoolset-12/root/bin/gcc /usr/bin/gcc
+RUN ln -s --force /opt/rh/devtoolset-12/root/bin/g++ /usr/bin/g++
 RUN wget https://github.com/git/git/archive/v$GIT_VERSION.tar.gz
 RUN tar xvf v$GIT_VERSION.tar.gz
 
