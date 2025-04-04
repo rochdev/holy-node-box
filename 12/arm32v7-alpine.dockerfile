@@ -8,4 +8,4 @@ FROM --platform=linux/arm node:12.9.0-alpine
 
 COPY --from=builder qemu-arm-static /usr/bin
 
-RUN apk --no-cache add bash build-base git python3 curl tar zstd
+RUN apk --no-cache add bash build-base git python curl tar zstd
