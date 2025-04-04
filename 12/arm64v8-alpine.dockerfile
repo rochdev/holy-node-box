@@ -5,4 +5,6 @@ RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
 
 FROM --platform=linux/arm64 node:12.0.0-alpine
 
+COPY --from=builder qemu-aarch64-static /usr/bin
+
 RUN apk --no-cache add bash build-base git python3 curl tar zstd
