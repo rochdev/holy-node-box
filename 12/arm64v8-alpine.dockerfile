@@ -8,3 +8,5 @@ FROM --platform=linux/arm64 node:16.0.0-alpine
 COPY --from=builder qemu-aarch64-static /usr/bin
 
 RUN apk --no-cache add bash build-base git python2 curl tar zstd
+
+USER node
