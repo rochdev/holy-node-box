@@ -1,0 +1,70 @@
+{
+  "include": [
+    {
+      "version": "8",
+      "tag": "8-amd64",
+      "dockerfile": "8/amd64.dockerfile",
+      "platform": "linux/amd64"
+    },
+    {
+      "version": "8",
+      "tag": "8-arm64v8",
+      "dockerfile": "8/arm64v8.dockerfile",
+      "platform": "linux/arm64"
+    },
+    {
+      "version": "12",
+      "tag": "12-amd64",
+      "dockerfile": "12/amd64.dockerfile",
+      "platform": "linux/amd64"
+    },
+    {
+      "version": "12",
+      "tag": "12-arm64v8",
+      "dockerfile": "12/arm64v8.dockerfile",
+      "platform": "linux/arm64"
+    },
+    {
+      "version": "12",
+      "tag": "12-arm32v7",
+      "dockerfile": "12/arm32v7.dockerfile",
+      "platform": "linux/arm/v7"
+    },
+    {
+      "version": "12",
+      "tag": "12-amd64-alpine",
+      "dockerfile": "12/amd64-alpine.dockerfile",
+      "platform": "linux/amd64"
+    },
+    {
+      "version": "12",
+      "tag": "12-arm64v8-alpine",
+      "dockerfile": "12/arm64v8-alpine.dockerfile",
+      "platform": "linux/arm64"
+    },
+    {
+      "version": "12",
+      "tag": "12-arm32v7-alpine",
+      "dockerfile": "12/arm32v7-alpine.dockerfile",
+      "platform": "linux/arm/v7"
+    },
+    {
+      "version": "12",
+      "tag": "12-amd64-alpine3.17",
+      "dockerfile": "12/amd64-alpine3.17.dockerfile",
+      "platform": "linux/amd64"
+    },
+    {
+      "version": "12",
+      "tag": "12-arm64v8-alpine3.17",
+      "dockerfile": "12/arm64v8-alpine3.17.dockerfile",
+      "platform": "linux/arm64"
+    },
+    {
+      "version": "12",
+      "tag": "12-i386",
+      "dockerfile": "12/i386.dockerfile",
+      "platform": "linux/386"
+    }
+  ]
+}
