@@ -1,0 +1,93 @@
+name: Build and Push
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - version: 8
+            tag: 8-amd64
+            dockerfile: 8/amd64.dockerfile
+            platform: linux/amd64
+          - version: 8
+            tag: 8-arm64v8
+            dockerfile: 8/arm64v8.dockerfile
+            platform: linux/arm64
+          - version: 12
+            tag: 12-amd64
+            dockerfile: 12/amd64.dockerfile
+            platform: linux/amd64
+          - version: 12
+            tag: 12-arm64v8
+            dockerfile: 12/arm64v8.dockerfile
+            platform: linux/arm64
+          - version: 12
+            tag: 12-arm32v7
+            dockerfile: 12/arm32v7.dockerfile
+            platform: linux/arm/v7
+          - version: 12
+            tag: 12-amd64-alpine
+            dockerfile: 12/amd64-alpine.dockerfile
+            platform: linux/amd64
+          - version: 12
+            tag: 12-arm64v8-alpine
+            dockerfile: 12/arm64v8-alpine.dockerfile
+            platform: linux/arm64
+          - version: 12
+            tag: 12-arm32v7-alpine
+            dockerfile: 12/arm32v7-alpine.dockerfile
+            platform: linux/arm/v7
+          - version: 12
+            tag: 12-i386
+            dockerfile: 12/i386.dockerfile
+            platform: linux/386
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-qemu-action@v3
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        if: github.event_name != 'pull_request'
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.version }}
+          file: ${{ matrix.dockerfile }}
+          platforms: ${{ matrix.platform }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ghcr.io/rochdev/holy-node-box:${{ matrix.tag }}
+
+  manifest:
+    needs: build
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [8, 12]
+    steps:
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create and push multi-arch manifest
+        run: |
+          docker manifest create ghcr.io/rochdev/holy-node-box:${{ matrix.version }} \
+            ghcr.io/rochdev/holy-node-box:${{ matrix.version }}-amd64 \
+            ghcr.io/rochdev/holy-node-box:${{ matrix.version }}-arm64v8
+          docker manifest push ghcr.io/rochdev/holy-node-box:${{ matrix.version }}
